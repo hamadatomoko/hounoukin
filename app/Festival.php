@@ -10,7 +10,7 @@ class Festival extends Model
 
     // 以下を追記
     public static $rules = array(
-        'namespace' => 'required',
+        'name' => 'required',
         
     );
     //

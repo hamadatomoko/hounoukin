@@ -5,40 +5,48 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Dedicater;
-class DedicaterController extends Controller
-{
-    public function add()
+use App\DedicationMoney;
+use App\Festival;
+class DedicationMoneyController extends Controller
+{ 
+
+  public function add(Request $request)
   {
-      return view('admin.dedicater.create');
+     $festivals=Festival::pluck('name','id') ;// 
+      $dedicater= Dedicater::find($request->id);
+      if (empty($dedicater)) {
+        abort(404);    
+      }
+      return view('admin.dedication_moneys.create', ['dedicater' => $dedicater,'festivals'=>$festivals]);
   }
  //
   public function create(Request $request)
   {
-     $this->validate($request, Dedicater::$rules);
+     $this->validate($request, DedicationMoney::$rules);
      
-      $dedicater = new Dedicater;
+      $dedication_money = new DedicationMoney;
       $form = $request->all();
       
       // フォームから送信されてきた_tokenを削除する
       unset($form['_token']);
       // フォームから送信されてきたimageを削除する
       // データベースに保存する
-      $dedicater->fill($form);
-      $dedicater->save();
+      $dedication_money->fill($form);
+      $dedication_money->save();
       
-      return redirect('admin/dedicater/create');
+      return redirect('admin/dedication_moneys/create');
   }
    public function index(Request $request)
   {
       $cond_name = $request->cond_name;
       if ($cond_name != '') {
           // 検索されたら検索結果を取得する
-          $posts = Dedicater::where('title', $cond_name)->get();
+          $posts = DedicationMoney::where('title', $cond_name)->get();
       } else {
           // それ以外はすべての奉納者を取得する
-          $posts = Dedicater::all();
+          $posts = DedicationMoney::all();
       }
-      return view('admin.dedicater.index', ['posts' => $posts, 'cond_name' => $cond_name]);
+      return view('admin.dedication_moneys.index', ['posts' => $posts, 'cond_name' => $cond_name]);
   }
  public function edit(Request $request)
   {
@@ -49,17 +57,7 @@ class DedicaterController extends Controller
       }
       return view('admin.dedicater.edit', ['dedicater_form' => $dedicater]);
   }
- public function detail(Request $request)
-  {
-      // 
-      $dedicater= Dedicater::find($request->id);
-      if (empty($dedicater)) {
-        abort(404);    
-      }
-      return view('admin.dedicater.detail', ['dedicater_form' => $dedicater]);
-  }
-
-  public function update(Request $request)
+   public function update(Request $request)
   {
       // Validationをかける
       $this->validate($request, Dedicater::$rules);
@@ -74,4 +72,5 @@ class DedicaterController extends Controller
 
       return redirect('admin/dedicater');
   }
+    //
 }

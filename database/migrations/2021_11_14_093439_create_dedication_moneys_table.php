@@ -16,11 +16,11 @@ class CreateDedicationMoneysTable extends Migration
         Schema::create('dedication_moneys', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-             $table->timestamp('date');
+             $table->timestamp('date')->nullable();
               $table->integer('money');
-               $table->string('memo');
+               $table->string('memo')->nullable();
                 $table->bigInteger('dedicater_id');
-                  $table->bigInteger('fetival_id');
+                  $table->bigInteger('festival_id');
         });
     }
 

@@ -16,7 +16,7 @@ class CreateFestivalsTable extends Migration
         Schema::create('festivals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name'); 
-            $table->string('memo'); 
+            $table->string('memo')->nullable(); 
             $table->timestamps();
         });
     }
