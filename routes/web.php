@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('dedicater/create', 'Admin\DedicaterController@add');
     Route::post('dedicater/create', 'Admin\DedicaterController@create');
@@ -31,8 +30,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('dedication-money/edit', 'Admin\DedicationMoneyController@edit');
     Route::post('dedication-money/edit', 'Admin\DedicationMoneyController@update');
       Route::get('dedication-money', 'Admin\DedicationMoneyController@index');
+         Route::get('dedication-money/delete', 'Admin\DedicationMoneyController@delete');
+          Route::get('dedication-money/pdf', 'Admin\DedicationMoneyController@generate_pdf');
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 

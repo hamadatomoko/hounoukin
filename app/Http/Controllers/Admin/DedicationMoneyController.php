@@ -71,6 +71,16 @@ class DedicationMoneyController extends Controller
       $dedicater->fill($dedicater_form)->save();
 
       return redirect('admin/dedicater');
+     
   }
-    //
+  public function delete(Request $request)
+  {
+   }//
+    public function generate_pdf() {
+      $posts = DedicationMoney::all();
+
+        $pdf = \PDF::loadView('admin.dedication_moneys.generate_pdf',compact('posts'));
+        return $pdf->stream('title.pdf');
+
+    }
 }

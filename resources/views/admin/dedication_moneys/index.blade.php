@@ -6,25 +6,9 @@
         <div class="row">
             <h2>奉納金一覧</h2>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <a href="{{ action('Admin\DedicaterController@add') }}" role="button" class="btn btn-primary">新規作成</a>
+         <div class="col-md-4">
+                <a href="{{ action('Admin\DedicationMoneyController@generate_pdf') }}" role="button" class="btn btn-primary">印刷</a>
             </div>
-            <div class="col-md-8">
-                <form action="{{ action('Admin\DedicaterController@index') }}" method="get">
-                    <div class="form-group row">
-                        <label class="col-md-2">奉納金名</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="cond_name" value="{{ $cond_name}}">
-                        </div>
-                        <div class="col-md-2">
-                            {{ csrf_field() }}
-                            <input type="submit" class="btn btn-primary" value="検索">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
         <div class="row">
             <div class="list-dedication-moneys col-md-12 mx-auto">
                 <div class="row">
@@ -42,7 +26,7 @@
                             @foreach($posts as $dedication_money)
                                 <tr>
                                     <td>{{ \Str::limit($dedication_money->date, 100) }}</td>
-                                    <td>{{ \Str::limit($dedication_money->name, 250) }}</td>
+                                    <td>{{ \Str::limit($dedication_money->dedicater->name, 250) }}</td>
                                     <td>{{ \Str::limit($dedication_money->money, 250) }}</td>
                                     
                                     
